@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog — AstroForge: Idle Miner</title>
+  <meta name="description" content="What's new in AstroForge: Idle Miner, a space-mining idle game by Chaotic Game Studios — newest first." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <style>
+    :root { --bg:#070a18; --panel:#0d1024; --text:#eef0fb; --muted:#8f96bd; --purple:#7C4DFF; --amber:#ffb300; --line:#232a52; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background:
+        radial-gradient(900px 500px at 85% -5%, rgba(124, 77, 255, 0.12), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+    nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 0 28px; }
+    nav .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    nav .brand .logo { width: 32px; height: 32px; border-radius: 8px; overflow: hidden; box-shadow: 0 0 14px rgba(124, 77, 255, 0.45); flex-shrink: 0; }
+    nav .brand .logo img { width: 100%; height: 100%; display: block; }
+    nav .links { display: flex; gap: 20px; font-size: 14px; }
+    nav .links a { color: var(--muted); font-weight: 600; text-decoration: none; }
+    nav .links a:hover { color: var(--amber); }
+    h1 { font-size: 26px; margin-bottom: 6px; }
+    .sub { color: var(--muted); margin-bottom: 28px; font-size: 14px; }
+    .ver { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; }
+    .ver h2 { font-size: 16px; color: var(--amber); margin-bottom: 10px; }
+    .ver ul { list-style: none; }
+    .ver li { padding: 5px 0 5px 18px; position: relative; color: var(--text); font-size: 14px; line-height: 1.5; }
+    .ver li::before { content: '▸'; position: absolute; left: 0; color: var(--purple); }
+    .ver strong { color: var(--text); }
+    footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 32px; }
+    footer a { color: var(--amber); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <div class="brand">
+        <span class="logo"><img src="assets/icon.svg" alt="AstroForge: Idle Miner icon" /></span>
+        <span>AstroForge: Idle Miner</span>
+      </div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="mailto:support@astroforge.chaoticgamestudios.com">Contact</a>
+      </div>
+    </nav>
+    <h1>Changelog</h1>
+    <p class="sub">What's new in AstroForge: Idle Miner, newest first. Mirrors CHANGELOG.md in the repo.</p>
+
+    <section class="ver">
+      <h2>1.4.4 (2026-08-03)</h2>
+      <ul>
+        <li><strong>Artifact loadouts:</strong> 8 active slots — only active artifacts apply effects; the rest sit vaulted. Tap cards to activate/vault, auto-activate on discovery when a slot is free, and 3 saveable loadout presets (A/B/C) for comet / income / offline builds.</li>
+        <li><strong>Weekly mission track:</strong> 12 daily-mission claims per week pays 100💎 + 5⭐ — progress card on the Rewards screen.</li>
+        <li><strong>Offline rival raids:</strong> the welcome-back modal now reports rivals that passed you while away — or pays defense crystals (2💎 per raid, up to 3) when your rank held for 1h+ of absence.</li>
+        <li>2 new achievements (Weekly Grind, Not Today).</li>
+      </ul>
+    </section>
+
+    <section class="ver">
+      <h2>1.4.3 (2026-08-03)</h2>
+      <ul>
+        <li><strong>Void Shards — second prestige layer.</strong> Hold 250 ⭐ to unlock the Void Dive: resets credits, extractors, upgrades, Star Cores and core perks for Void Shards (+25% income each, forever). Artifacts are kept — the collection survives the void.</li>
+        <li><strong>Void shop:</strong> 4 shard perks (starting credits, expedition cores, offline cap, comet rewards).</li>
+        <li>2 new achievements (Into the Void, Voidwalker); Pilot Record gains Void Shards / Void Dives rows.</li>
+      </ul>
+    </section>
+
+    <section class="ver">
+      <h2>1.4.2 (2026-08-03)</h2>
+      <ul>
+        <li><strong>Content:</strong> two new extractor tiers — 🌌 Galaxy Reclaimer (3B) and 🕳️ Event Horizon Drill (120B); six new artifacts (Chain Link, Victory Laurels, Trophy Room, Warp Reserves, two tier codexes — pool now 30); six new missions (pool now 18); five new achievements.</li>
+        <li><strong>Overtake toasts:</strong> get notified when you pass rivals on the ladder; best rank now tracked in Pilot Record.</li>
+        <li><strong>Milestone celebrations:</strong> toast + fanfare when a purchase crosses an extractor ×2 milestone.</li>
+        <li><strong>Save export/import:</strong> base64 save backup/restore in Settings (bridge until cloud saves).</li>
+      </ul>
+    </section>
+
+    <section class="ver">
+      <h2>1.4.1 (2026-08-03)</h2>
+      <ul>
+        <li><strong>Comet chains:</strong> consecutive catches without letting one expire build a chain — rewards ×1.25 per link, capped ×3. Best-chain stat + 'Comet Surfer' achievement (chain 5).</li>
+        <li><strong>Expedition recap:</strong> completing an expedition shows a run recap (credits earned, time, taps, crits, comets) with cores gained.</li>
+      </ul>
+    </section>
+
+    <section class="ver">
+      <h2>1.4.0 (2026-08-03)</h2>
+      <ul>
+        <li><strong>Rival challenges:</strong> a rival 3–10 ranks above you issues a 24h out-earn duel (25💎 prize, 24h cooldown). Live race card on Ranks with dual progress bars, countdown, win/lose states. 2 challenge achievements.</li>
+        <li><strong>Comet variety:</strong> standard (amber), crystal (25💎 guaranteed, purple), and core comets (1⭐ guaranteed, white-gold, post-prestige only).</li>
+        <li><strong>Sound + haptics:</strong> procedural WebAudio blips (tap, crit, buy, achievement, comet, discovery, win/lose) — no audio files; vibrate on taps and crits; Sound toggle in Settings.</li>
+        <li><strong>Share rank card:</strong> canvas-rendered 1080×1080 PNG (rank, percentile, credits, artifacts, challenge wins) via native share sheet or download.</li>
+      </ul>
+    </section>
+
+    <section class="ver">
+      <h2>1.3.0 (2026-08-03)</h2>
+      <ul>
+        <li><strong>Artifact discovery system (Tap Titans-style):</strong> 24 artifacts across common/rare/epic rarities. Discoveries are random — duplicates level the artifact up instead. Cost scales per unique owned (5 → ×1.4 each). Slot-machine reveal modal, rarity-tinted collection grid with silhouettes for undiscovered artifacts.</li>
+        <li>New artifact effects: tier codexes (×2 per tier per level), upgrade and manager discounts, boost duration, daily reward scaling, offline multiplier, comet riches, crit power, core magnet, sponsor contract (boosted ad grants), core geode (comets can drop Star Cores).</li>
+        <li>v1.2.0 artifacts migrate to their v1.3.0 equivalents — nothing lost.</li>
+        <li>3 collection achievements (8/16/24 artifacts).</li>
+      </ul>
+    </section>
+
+    <section class="ver">
+      <h2>1.2.0 (2026-08-03)</h2>
+      <ul>
+        <li><strong>Galactic Ranks v2:</strong> 10,000 rival pilots (up from 200) with real harvested usernames, percentile readout, and a "next target" chase bar — the ladder is now a long-term climb, not a pond.</li>
+        <li><strong>Artifacts:</strong> 8 permanent collectibles bought with Star Cores (survive expeditions): Ore Compass, Golden Drill, Trade Beacon, Cryo Vault, Lucky Core, Warp Engine, Scout Array (+1 mission slot), Singularity Siphon. Gallery on the Expedition screen.</li>
+        <li><strong>Pilot Record:</strong> full lifetime stats card in Settings.</li>
+        <li>Welcome-back modal now flags missions completed while you were away.</li>
+        <li>2 new achievements (artifact collection), new stat coresEarned.</li>
+      </ul>
+    </section>
+
+    <section class="ver">
+      <h2>1.1.0 (2026-08-03)</h2>
+      <ul>
+        <li><strong>Fix:</strong> expedition could be spammed for infinite Star Cores — prestige is now based on run earnings (<code>runCredits</code>), which reset on expedition.</li>
+        <li><strong>Galactic Ranks:</strong> simulated local ladder — 200 rival pilots with callsigns, ranked by lifetime credits; rivals grow and wobble over real time so neighbors swap places. New Ranks tab.</li>
+        <li><strong>Comets:</strong> golden-cookie style events — a comet drifts across the screen every 3–7 min (15s window); tap for 60s of income or 10 crystals.</li>
+        <li><strong>Missions:</strong> 3 rotating daily missions (from a pool of 12) with crystal rewards on the Rewards screen.</li>
+        <li>3 new achievements (comets ×2, missions ×1); new stats: comets, adsWatched, missionsDone. Old saves migrate cleanly.</li>
+      </ul>
+    </section>
+
+    <section class="ver">
+      <h2>1.0.1 (2026-08-02)</h2>
+      <ul>
+        <li><strong>Fix:</strong> startup crash after update installs — the PWA service worker no longer registers on native (its stale cache could boot-break the WebView); PWA cache bumped to af-cache-v2. AdMob ids now Google's official test ids.</li>
+      </ul>
+    </section>
+
+    <section class="ver">
+      <h2>1.0.0 (2026-08-02)</h2>
+      <ul>
+        <li>Initial release.</li>
+        <li>6 extractor tiers (Mining Drone → Quantum Siphon) with ×2 milestones and per-tier managers; global income upgrade line.</li>
+        <li>Tap-to-mine asteroid on the Mine screen (visual effects, tap value scales with income) — onboarding starts at 0 credits.</li>
+        <li>5 upgrade lines: Refinery Efficiency (income), Jackhammer Grip (tap value), Critical Excavation (x10 crit taps), Cryo Storage (offline earnings), Bulk Contracts (extractor discounts).</li>
+        <li>Asteroid reacts to upgrades: amber glow scales with tap power, orbiting drones per 25 extractors owned, mining lasers at Refinery 5+, golden crit bursts on critical taps.</li>
+        <li>38 achievements (tap, crit, manager, total-extractor, upgrade, playtime, offline-claim and expedition milestones).</li>
+        <li>Expeditions (prestige): Star Cores (+3% income each), 4-perk core shop (offline cap, head start, core boost, warp discount).</li>
+        <li>Offline earnings capped at 8h (24h + ×3 with Idle ×3 IAP), welcome-back modal with watch-ad-to-double.</li>
+        <li>7-day daily rewards, 24 achievements, boosts (2× 10m ad / 4h crystals), time warps (1h/4h/24h).</li>
+        <li>Monetization: 4 rewarded ad placements + 1 interstitial (all skipped for Remove Ads owners), 10 IAP SKUs (no-ads, income ×2/×3, idle ×3, starter pack, 5 crystal bundles) with idempotent grant guard + restore.</li>
+        <li>Daily 18:30 local notification reminder (opt-in from Settings only).</li>
+        <li>PWA shell (offline-capable service worker) + Capacitor 7 Android wrapper.</li>
+      </ul>
+    </section>
+
+    <footer>&copy; 2026 Chaotic Game Studios &middot; <a href="index.html">astroforge.chaoticgamestudios.com</a></footer>
+  </div>
+</body>
+</html>

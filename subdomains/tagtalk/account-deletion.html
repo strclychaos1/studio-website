@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TagTalk — Account &amp; Data Deletion</title>
+  <meta name="description" content="How to request account and data deletion from TagTalk, a license plate messaging app by Chaotic Game Studios." />
+  <meta name="robots" content="index, follow" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --surface: #14141b;
+      --surface-2: #1b1b26;
+      --border: #232330;
+      --text: #f4f4f8;
+      --muted: #9aa0aa;
+      --brand: #ff4d3d;
+      --brand-hover: #ff6a5c;
+      --warn: #ffcc4d;
+      --radius: 14px;
+      --max-width: 780px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brand); text-decoration: none; font-weight: 600; }
+    a:hover { color: var(--brand-hover); text-decoration: underline; }
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+    .brand .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--brand);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 18px;
+    }
+    h1 {
+      font-size: clamp(28px, 4.2vw, 40px);
+      line-height: 1.15;
+      margin: 24px 0 8px;
+      letter-spacing: -0.02em;
+    }
+    .lead { color: var(--muted); font-size: 16px; margin: 0; }
+    .meta {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-top: 20px;
+    }
+    section h2 {
+      font-size: 18px;
+      margin: 0 0 12px;
+      letter-spacing: -0.01em;
+    }
+    section p, section li { color: var(--text); font-size: 15px; }
+    section p { margin: 0 0 10px; }
+    ul, ol { padding-left: 22px; margin: 0; }
+    ul li, ol li { margin-bottom: 8px; }
+
+    .steps { counter-reset: step; padding: 0; list-style: none; }
+    .steps > li {
+      counter-increment: step;
+      padding: 16px 16px 16px 60px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .steps > li::before {
+      content: counter(step);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .steps > li strong { display: block; margin-bottom: 4px; }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--brand);
+      color: #fff !important;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+      margin-top: 4px;
+    }
+    .cta:hover { background: var(--brand-hover); text-decoration: none; }
+    .cta-row { margin: 20px 0 4px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th {
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+    tr:last-child td { border-bottom: none; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: rgba(255, 77, 61, 0.15);
+      color: var(--brand);
+      border: 1px solid rgba(255, 77, 61, 0.35);
+    }
+    .tag.keep {
+      background: rgba(255, 204, 77, 0.15);
+      color: var(--warn);
+      border-color: rgba(255, 204, 77, 0.35);
+    }
+    .note {
+      background: rgba(255, 204, 77, 0.10);
+      border: 1px solid rgba(255, 204, 77, 0.4);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .note strong { color: var(--warn); }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    footer .row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #fafafa;
+        --surface: #ffffff;
+        --surface-2: #f4f4f8;
+        --border: #e5e5ea;
+        --text: #111116;
+        --muted: #6a6a75;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <span class="logo">T</span>
+        <span>TagTalk</span>
+      </div>
+      <h1>Account &amp; Data Deletion</h1>
+      <p class="lead">
+        You have the right to request deletion of your TagTalk account and the personal data
+        associated with it. This page explains exactly how to request it, what happens next,
+        and what is kept for legal or fraud‑prevention reasons.
+      </p>
+      <div class="meta">Last updated: June 2026</div>
+    </header>
+
+    <section>
+      <h2>Request deletion in three steps</h2>
+      <ol class="steps">
+        <li>
+          <strong>Send us an email</strong>
+          From the email address associated with your TagTalk account, send a message to
+          <a href="mailto:support@tagtalk.chaoticgamestudios.com?subject=TagTalk%20Account%20Deletion%20Request&amp;body=Hi%20TagTalk%20Team%2C%0A%0AI%20would%20like%20to%20delete%20my%20TagTalk%20account%20and%20all%20associated%20data.%0A%0AAccount%20email%3A%20%3Cyour%20email%3E%0AGoogle%20account%20name%3A%20%3Cyour%20name%3E%0A%0AI%20confirm%20I%20am%20the%20owner%20of%20this%20account.%0A%0AThank%20you.">support@tagtalk.chaoticgamestudios.com</a>.
+          Use the button below to open your mail app with a pre‑filled request.
+        </li>
+        <li>
+          <strong>We verify your identity</strong>
+          To protect you from someone else deleting your account, we confirm that the request
+          came from the account's registered email. If we can't verify, we'll reply and ask
+          for a simple confirmation.
+        </li>
+        <li>
+          <strong>We delete your data within 30 days</strong>
+          Once verified, we permanently delete your account, vehicles, and outgoing messages
+          from our production database. You'll receive an email confirmation when it's done.
+        </li>
+      </ol>
+      <div class="cta-row">
+        <a class="cta" href="mailto:support@tagtalk.chaoticgamestudios.com?subject=TagTalk%20Account%20Deletion%20Request&amp;body=Hi%20TagTalk%20Team%2C%0A%0AI%20would%20like%20to%20delete%20my%20TagTalk%20account%20and%20all%20associated%20data.%0A%0AAccount%20email%3A%20%3Cyour%20email%3E%0AGoogle%20account%20name%3A%20%3Cyour%20name%3E%0A%0AI%20confirm%20I%20am%20the%20owner%20of%20this%20account.%0A%0AThank%20you.">
+          Email deletion request
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>What gets deleted</h2>
+      <p>The following data is permanently removed when your request is completed:</p>
+      <table>
+        <thead>
+          <tr><th>Data type</th><th>What happens</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google Sign-In identity (name, email, profile picture)</td>
+            <td><span class="tag">Deleted</span></td>
+          </tr>
+          <tr>
+            <td>Vehicles linked to your garage (plate, state, make, model, color, photos)</td>
+            <td><span class="tag">Deleted</span></td>
+          </tr>
+          <tr>
+            <td>Messages, ratings, and tags you sent to other plates</td>
+            <td><span class="tag">Deleted</span></td>
+          </tr>
+          <tr>
+            <td>Plate ownership claims you submitted (including registration photos)</td>
+            <td><span class="tag">Deleted</span></td>
+          </tr>
+          <tr>
+            <td>Purchase history (Google Play tokens, unlock status)</td>
+            <td><span class="tag">Deleted</span></td>
+          </tr>
+          <tr>
+            <td>Login sessions</td>
+            <td><span class="tag">Deleted</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>What is kept, and why</h2>
+      <p>For legal, safety, and fraud‑prevention reasons, a small amount of data may be retained after account deletion:</p>
+      <table>
+        <thead>
+          <tr><th>Data type</th><th>Retention</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Records of abuse reports or moderator actions taken against you (anonymized where possible)</td>
+            <td><span class="tag keep">Kept up to 2 years</span></td>
+          </tr>
+          <tr>
+            <td>Anonymized transaction records required by tax / accounting laws (order ID, amount, date — no personal identifiers)</td>
+            <td><span class="tag keep">Kept up to 7 years</span></td>
+          </tr>
+          <tr>
+            <td>Server backups containing deleted data (rotated automatically)</td>
+            <td><span class="tag keep">Up to 30 days</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">
+        <strong>Note:</strong> Google Play manages your subscription billing history separately.
+        Cancelling your subscription and requesting deletion here does not affect refund
+        eligibility — for refunds, contact Google Play support directly at
+        <a href="https://support.google.com/googleplay/answer/2479637" target="_blank" rel="noopener">support.google.com/googleplay</a>.
+      </div>
+    </section>
+
+    <section>
+      <h2>Delete individual data without closing your account</h2>
+      <p>If you only want to remove specific items, you don't need to close your account:</p>
+      <ul>
+        <li><strong>Delete a vehicle:</strong> open the app → <em>Garage</em> tab → tap the vehicle → <em>Delete</em>.</li>
+        <li><strong>Cancel your subscription:</strong> open <em>Google Play Store</em> → menu → <em>Payments &amp; subscriptions</em> → <em>Subscriptions</em> → <em>TagTalk</em> → <em>Cancel</em>.</li>
+        <li><strong>Reset ad personalization:</strong> Android <em>Settings</em> → <em>Google</em> → <em>Ads</em> → <em>Delete advertising ID</em>.</li>
+        <li><strong>Withdraw a claim you submitted:</strong> email us — we'll remove the pending claim and its registration photo.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How long does the process take?</h2>
+      <ul>
+        <li><strong>Same day:</strong> we acknowledge receipt of your request.</li>
+        <li><strong>Within 7 days:</strong> we verify identity (if not already confirmed) and begin deletion.</li>
+        <li><strong>Within 30 days:</strong> all data is deleted from active systems.</li>
+        <li><strong>Within 30 days after that:</strong> all data is purged from rotating backups.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>
+        Questions or concerns about deletion? Reach us at
+        <a href="mailto:support@tagtalk.chaoticgamestudios.com">support@tagtalk.chaoticgamestudios.com</a>.
+        We aim to respond within one business day.
+      </p>
+      <p>
+        See our full <a href="privacy.html">Privacy Policy</a>
+        <a href="child-safety.html">Child Safety</a> for more information about how
+        we handle your data.
+      </p>
+    </section>
+
+    <footer>
+      <div>&copy; 2026 Chaotic Game Studios. All rights reserved.</div>
+      <div class="row">
+        <a href="index.html">Home</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="child-safety.html">Child Safety</a>
+        <a href="mailto:support@tagtalk.chaoticgamestudios.com">Contact</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

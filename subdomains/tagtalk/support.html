@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TagTalk — Help &amp; Support</title>
+  <meta name="description" content="Frequently asked questions and support contact for TagTalk, a license plate messaging app by Chaotic Game Studios." />
+  <meta name="robots" content="index, follow" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --surface: #14141b;
+      --surface-2: #1b1b26;
+      --border: #232330;
+      --text: #f4f4f8;
+      --muted: #9aa0aa;
+      --brand: #ff4d3d;
+      --brand-hover: #ff6a5c;
+      --radius: 14px;
+      --max-width: 780px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brand); text-decoration: none; font-weight: 600; }
+    a:hover { color: var(--brand-hover); text-decoration: underline; }
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+    .brand .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--brand);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 18px;
+    }
+    h1 {
+      font-size: clamp(28px, 4.2vw, 40px);
+      line-height: 1.15;
+      margin: 24px 0 8px;
+      letter-spacing: -0.02em;
+    }
+    .lead { color: var(--muted); font-size: 16px; margin: 0; }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--brand);
+      color: #fff !important;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+    }
+    .cta:hover { background: var(--brand-hover); text-decoration: none; }
+    .cta-row { margin: 24px 0 8px; }
+
+    .label {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin: 32px 0 12px;
+    }
+
+    details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 16px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    details[open] summary::after { content: "\2212"; }
+    details .answer {
+      padding: 0 18px 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    details .answer p { margin: 0; }
+
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-top: 20px;
+    }
+    section h2 { font-size: 18px; margin: 0 0 12px; letter-spacing: -0.01em; }
+    section p, section li { color: var(--text); font-size: 15px; }
+    section p { margin: 0 0 10px; }
+    ul { padding-left: 20px; margin: 0; }
+    ul li { margin-bottom: 6px; }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    footer .row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #fafafa;
+        --surface: #ffffff;
+        --surface-2: #f4f4f8;
+        --border: #e5e5ea;
+        --text: #111116;
+        --muted: #6a6a75;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <span class="logo">T</span>
+        <span>TagTalk</span>
+      </div>
+      <h1>Help &amp; Support</h1>
+      <p class="lead">
+        Browse the frequently asked questions below, or email us &mdash; we usually reply within a day.
+      </p>
+      <div class="cta-row">
+        <a class="cta" href="mailto:support@tagtalk.chaoticgamestudios.com?subject=TagTalk%20support%20request&amp;body=Please%20describe%20your%20issue%20below.%20Feel%20free%20to%20include%20screenshots.%0A%0A">Email support</a>
+      </div>
+    </header>
+
+    <div class="label">Frequently asked</div>
+
+    <details open>
+      <summary>What is TagTalk?</summary>
+      <div class="answer"><p>TagTalk lets you leave a message, rating, or tag on any license plate you spot. If someone claims that plate, they'll see everything the community has said about their driving.</p></div>
+    </details>
+    <details>
+      <summary>How do I add my own plate?</summary>
+      <div class="answer"><p>Open the Garage tab and tap the + button. Enter your plate number, state, and vehicle details. To unlock the messages left on it, tap Unlock and choose Lifetime or Monthly.</p></div>
+    </details>
+    <details>
+      <summary>Someone else registered my plate. What do I do?</summary>
+      <div class="answer"><p>Tap Submit a Claim on the plate result screen and attach a photo of your vehicle registration. A moderator will review and transfer the plate to you &mdash; typically within 24&ndash;48 hours.</p></div>
+    </details>
+    <details>
+      <summary>Why can't I read messages left on my own plate?</summary>
+      <div class="answer"><p>Reading incoming messages requires a one-time Lifetime unlock ($19.99) or a Monthly subscription ($2.99). You can send messages to other plates for free.</p></div>
+    </details>
+    <details>
+      <summary>How does anonymous mode work?</summary>
+      <div class="answer"><p>When you send a message anonymously, your name is hidden from the recipient and everyone else. We still record who sent it internally, so we can moderate abuse. Please use it kindly.</p></div>
+    </details>
+    <details>
+      <summary>Can I rate the same plate multiple times?</summary>
+      <div class="answer"><p>No &mdash; each user can leave only one review per plate. You also can't rate your own plate.</p></div>
+    </details>
+    <details>
+      <summary>I purchased on another device. How do I restore my unlock?</summary>
+      <div class="answer"><p>Open the Unlock screen and tap "Restore purchases" at the bottom. Make sure you're signed into the same Google account you originally purchased with.</p></div>
+    </details>
+    <details>
+      <summary>How do I cancel my Monthly subscription?</summary>
+      <div class="answer"><p>Cancel any time from the Google Play Store &rarr; Menu &rarr; Payments &amp; subscriptions &rarr; Subscriptions &rarr; TagTalk. You keep access until the end of the current billing period.</p></div>
+    </details>
+    <details>
+      <summary>How do I report an abusive message?</summary>
+      <div class="answer"><p>Every message in your inbox has a report button (&hellip; menu). Tap it, choose a reason, and our moderators will review the report.</p></div>
+    </details>
+    <details>
+      <summary>How do I delete my account?</summary>
+      <div class="answer"><p>Email us at <a href="mailto:support@tagtalk.chaoticgamestudios.com">support@tagtalk.chaoticgamestudios.com</a> from the address associated with your account, or follow the steps on our <a href="account-deletion.html">Account &amp; Data Deletion</a> page. We'll delete your account, vehicles, and outgoing messages within 30 days.</p></div>
+    </details>
+
+    <section>
+      <h2>Still stuck?</h2>
+      <p>
+        Reach us directly at
+        <a href="mailto:support@tagtalk.chaoticgamestudios.com">support@tagtalk.chaoticgamestudios.com</a>.
+        We aim to respond within one business day.
+      </p>
+      <p>
+        You may also be looking for our <a href="privacy.html">Privacy Policy</a>
+        <a href="child-safety.html">Child Safety</a> or the
+        <a href="account-deletion.html">Account &amp; Data Deletion</a> page.
+      </p>
+    </section>
+
+    <footer>
+      <div>&copy; 2026 Chaotic Game Studios. All rights reserved.</div>
+      <div class="row">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="child-safety.html">Child Safety</a>
+        <a href="account-deletion.html">Account Deletion</a>
+        <a href="mailto:support@tagtalk.chaoticgamestudios.com">Contact</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

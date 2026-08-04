@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TagTalk — Leave a note on any tag</title>
+  <meta name="description" content="TagTalk lets you leave a message, rating, or tag on any license plate. Rate drivers, warn neighbors, share thanks." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="TagTalk — Leave a note on any tag" />
+  <meta property="og:description" content="Rate drivers, warn neighbors, share thanks. Search a plate to see what the community has to say — or claim your own and hear it first." />
+  <meta property="og:image" content="https://tagtalk.chaoticgamestudios.com/tagtalk-playstore-512.png" />
+  <meta property="og:url" content="https://tagtalk.chaoticgamestudios.com" />
+  <meta name="twitter:card" content="summary" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --surface: #14141b;
+      --surface-2: #1b1b26;
+      --border: #232330;
+      --text: #f4f4f8;
+      --muted: #9aa0aa;
+      --brand: #ff4d3d;
+      --brand-hover: #ff6a5c;
+      --radius: 14px;
+      --max-width: 900px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brand); text-decoration: none; font-weight: 600; }
+    a:hover { color: var(--brand-hover); text-decoration: underline; }
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+    .brand .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--brand);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 18px;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    nav .links { display: flex; gap: 20px; font-size: 14px; }
+    nav .links a { color: var(--muted); font-weight: 600; }
+    nav .links a:hover { color: var(--brand); text-decoration: none; }
+
+    .hero {
+      margin-top: 32px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border);
+      min-height: 420px;
+      display: flex;
+      align-items: flex-end;
+      background: var(--surface);
+    }
+    .hero .slides, .hero .slides img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero .slides img {
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .hero .slides img.active { opacity: 1; }
+    .hero .scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,11,15,0.92) 0%, rgba(11,11,15,0.35) 55%, rgba(11,11,15,0.05) 100%);
+    }
+    .hero .hero-content {
+      position: relative;
+      padding: 40px 32px 32px;
+    }
+    .hero .dots {
+      position: absolute;
+      bottom: 12px;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      z-index: 2;
+    }
+    .hero .dots button {
+      width: 6px; height: 6px;
+      border-radius: 3px;
+      border: none;
+      padding: 0;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: width 0.2s ease, background 0.2s ease;
+    }
+    .hero .dots button.active { width: 18px; background: #fff; }
+    h1 {
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.1;
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      color: #d6d6de;
+      font-size: 17px;
+      margin: 0 0 22px;
+      max-width: 520px;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--brand);
+      color: #fff !important;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+    }
+    .cta:hover { background: var(--brand-hover); text-decoration: none; }
+    .cta.soon {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--muted) !important;
+      cursor: default;
+    }
+    .cta.soon:hover { background: var(--surface-2); }
+    .store-badges { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    section { margin-top: 48px; }
+    section > h2 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: -0.01em;
+    }
+    section > .sub { color: var(--muted); font-size: 15px; margin: 0 0 20px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .card .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255, 77, 61, 0.15);
+      border: 1px solid rgba(255, 77, 61, 0.35);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+    .card h3 { font-size: 16px; margin: 0 0 6px; }
+    .card p { color: var(--muted); font-size: 14px; margin: 0; }
+
+    .steps { counter-reset: step; padding: 0; margin: 0; list-style: none; }
+    .steps > li {
+      counter-increment: step;
+      padding: 16px 16px 16px 60px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      position: relative;
+      font-size: 15px;
+    }
+    .steps > li::before {
+      content: counter(step);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .steps > li strong { display: block; margin-bottom: 4px; }
+    .steps > li span { color: var(--muted); font-size: 14px; }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    footer .row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #fafafa;
+        --surface: #ffffff;
+        --surface-2: #f4f4f8;
+        --border: #e5e5ea;
+        --text: #111116;
+        --muted: #6a6a75;
+      }
+      .hero p { color: #f0f0f4; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <div class="brand">
+        <span class="logo">T</span>
+        <span>TagTalk</span>
+      </div>
+      <div class="links">
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="account-deletion.html">Account Deletion</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="slides" id="hero-slides">
+        <img src="assets/hero-1.webp" alt="Two white Lexus sedans parked on a quiet street" class="active" />
+        <img src="https://images.pexels.com/photos/1077785/pexels-photo-1077785.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="A car on the road" loading="lazy" />
+        <img src="https://images.pexels.com/photos/1638459/pexels-photo-1638459.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="A car parked in the city" loading="lazy" />
+        <img src="https://images.pexels.com/photos/2036544/pexels-photo-2036544.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="A car at night" loading="lazy" />
+      </div>
+      <div class="scrim"></div>
+      <div class="hero-content">
+        <h1>Leave a note on any tag.</h1>
+        <p>Rate drivers, warn neighbors, share thanks. Search a plate to see what the community has to say &mdash; or claim your own and hear it first.</p>
+        <!-- Replace these spans with real store badges/links once the app is live:
+             Google Play: https://play.google.com/store/apps/details?id=com.chaoticgamestudios.tagtalk
+             App Store:   your Apple listing URL -->
+        <div class="store-badges">
+          <span class="cta soon">Coming soon to Google Play</span>
+          <span class="cta soon">Coming soon to the App Store</span>
+        </div>
+      </div>
+      <div class="dots" id="hero-dots"></div>
+    </div>
+
+    <script>
+      (function () {
+        var slides = document.querySelectorAll("#hero-slides img");
+        var dotsWrap = document.getElementById("hero-dots");
+        var idx = 0, timer;
+        slides.forEach(function (_, i) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.setAttribute("aria-label", "Show image " + (i + 1));
+          if (i === 0) b.className = "active";
+          b.addEventListener("click", function () { go(i); reset(); });
+          dotsWrap.appendChild(b);
+        });
+        var dots = dotsWrap.querySelectorAll("button");
+        function go(n) {
+          slides[idx].classList.remove("active");
+          dots[idx].classList.remove("active");
+          idx = n % slides.length;
+          slides[idx].classList.add("active");
+          dots[idx].classList.add("active");
+        }
+        function reset() { clearInterval(timer); timer = setInterval(function () { go(idx + 1); }, 4500); }
+        reset();
+      })();
+    </script>
+
+    <section>
+      <h2>What is TagTalk?</h2>
+      <p class="sub">Every plate has a story. TagTalk is where drivers tell it.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="icon">&#128269;</div>
+          <h3>Search any plate</h3>
+          <p>See community ratings, top tags, and message counts for any license plate &mdash; registered or not.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#9998;&#65039;</div>
+          <h3>Leave your mark</h3>
+          <p>Post a 1&ndash;5 star rating, pick from category tags, and add a message &mdash; signed or anonymous.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#128664;</div>
+          <h3>Claim your garage</h3>
+          <p>Link your own vehicles with plate, state, and a photo. Someone beat you to your plate? Submit a claim with your registration.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#128275;</div>
+          <h3>Unlock your inbox</h3>
+          <p>Reading messages left on your plates takes a one-time Lifetime unlock or a low Monthly subscription. Sending is always free.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <p class="sub">From download to your first note in under a minute.</p>
+      <ol class="steps">
+        <li>
+          <strong>Sign in with Google</strong>
+          <span>One tap, no passwords to remember.</span>
+        </li>
+        <li>
+          <strong>Add your vehicles</strong>
+          <span>Plate, state, make, model, and an optional photo &mdash; that's your garage.</span>
+        </li>
+        <li>
+          <strong>Search a plate or leave a note</strong>
+          <span>Say thanks for the parking spot save, or warn the next driver about a habitual lane-cutter.</span>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>A community with guardrails</h2>
+      <p class="sub">Anonymous doesn't mean unaccountable.</p>
+      <div class="card">
+        <p style="font-size: 15px; color: var(--text);">
+          Every message can be reported and is reviewed by human moderators. Anonymous senders are
+          hidden from other users, but never from our moderation team. Ownership disputes are settled
+          with vehicle registration, and abuse gets accounts banned &mdash; not argued with.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div>&copy; 2026 Chaotic Game Studios. All rights reserved.</div>
+      <div class="row">
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="child-safety.html">Child Safety</a>
+        <a href="account-deletion.html">Account Deletion</a>
+        <a href="mailto:support@tagtalk.chaoticgamestudios.com">Contact</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

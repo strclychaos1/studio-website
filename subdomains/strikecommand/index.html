@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strike-Command: Idle Scrims — Build your squad. Rule the scrims.</title>
+  <meta name="description" content="Strike-Command: Idle Scrims is an idle esports team-manager game by Chaotic Game Studios LLC. Build your tactical 5v5 squad, climb the leagues, rule the world ranking." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <meta property="og:title" content="Strike-Command: Idle Scrims — Build your squad. Rule the scrims." />
+  <meta property="og:description" content="An idle esports team-manager by Chaotic Game Studios. Build your tactical 5v5 squad, climb the leagues, rule the world ranking." />
+  <meta property="og:image" content="https://strikecommand.chaoticgamestudios.com/assets/shot-home.png" />
+  <meta property="og:url" content="https://strikecommand.chaoticgamestudios.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #131a24;
+      --surface-2: #1a2331;
+      --border: #243046;
+      --text: #f2f5fa;
+      --muted: #8b98ac;
+      --green: #2ecc71;
+      --green-glow: rgba(46, 204, 113, 0.45);
+      --gold: #ffb020;
+      --gold-glow: rgba(255, 176, 32, 0.45);
+      --brand: #ffb020;
+      --brand-hover: #ffc95e;
+      --radius: 14px;
+      --max-width: 980px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      background:
+        radial-gradient(900px 500px at 85% -5%, rgba(255, 176, 32, 0.08), transparent 60%),
+        radial-gradient(900px 500px at 10% 0%, rgba(46, 204, 113, 0.07), transparent 60%),
+        var(--bg);
+    }
+    a { color: var(--gold); text-decoration: none; font-weight: 600; }
+    a:hover { color: var(--brand-hover); text-decoration: underline; }
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+    .brand .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), #ff7a1a);
+      box-shadow: 0 0 18px var(--gold-glow);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a1206;
+      font-weight: 900;
+      font-size: 18px;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    nav .links { display: flex; gap: 20px; font-size: 14px; }
+    nav .links a { color: var(--muted); font-weight: 600; }
+    nav .links a:hover { color: var(--gold); text-decoration: none; }
+
+    .hero {
+      margin-top: 32px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border);
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(160deg, #16202e 0%, #0f1520 70%);
+    }
+    .hero .phones {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .hero .phones img {
+      position: absolute;
+      width: 300px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(46, 204, 113, 0.12);
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .hero .phones img.active { opacity: 1; }
+    .hero .phones .p1 { right: 220px; top: -40px; transform: rotate(6deg); }
+    .hero .phones .p2 { right: -30px; top: 60px; transform: rotate(-4deg); }
+    .hero .scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(13, 17, 23, 0.96) 25%, rgba(13, 17, 23, 0.55) 60%, rgba(13, 17, 23, 0.15) 100%);
+    }
+    .hero .hero-content {
+      position: relative;
+      padding: 48px 40px;
+      max-width: 560px;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 50px);
+      line-height: 1.08;
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+      background: linear-gradient(100deg, #fff 20%, var(--gold) 55%, var(--green) 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shine 6s ease-in-out infinite;
+      background-size: 200% 100%;
+    }
+    @keyframes shine {
+      0%, 100% { background-position: 0% 0; }
+      50% { background-position: 100% 0; }
+    }
+    .hero p {
+      color: #c9d2df;
+      font-size: 17px;
+      margin: 0 0 22px;
+      max-width: 460px;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold), #ff7a1a);
+      box-shadow: 0 6px 24px var(--gold-glow);
+      color: #1a1206 !important;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+    }
+    .cta:hover { filter: brightness(1.1); text-decoration: none; }
+    .cta.soon {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      box-shadow: none;
+      color: var(--muted) !important;
+      cursor: default;
+    }
+    .cta.soon:hover { filter: none; }
+    .store-badges { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero .dots {
+      position: absolute;
+      bottom: 14px;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      z-index: 2;
+    }
+    .hero .dots button {
+      width: 6px; height: 6px;
+      border-radius: 3px;
+      border: none;
+      padding: 0;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: width 0.2s ease, background 0.2s ease;
+    }
+    .hero .dots button.active { width: 18px; background: var(--gold); }
+
+    .income-ticker {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 14px;
+      font-weight: 800;
+      color: var(--green);
+      text-shadow: 0 0 18px var(--green-glow);
+      font-size: 15px;
+      letter-spacing: 0.04em;
+    }
+    .income-ticker .amount { font-size: 22px; }
+
+    section { margin-top: 56px; }
+    section > h2 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: -0.01em;
+    }
+    section > .sub { color: var(--muted); font-size: 15px; margin: 0 0 20px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 176, 32, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 24px rgba(255, 176, 32, 0.08);
+    }
+    .card .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(46, 204, 113, 0.12);
+      border: 1px solid rgba(46, 204, 113, 0.35);
+      box-shadow: inset 0 0 14px rgba(46, 204, 113, 0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+    .card h3 { font-size: 16px; margin: 0 0 6px; }
+    .card p { color: var(--muted); font-size: 14px; margin: 0; }
+
+    .steps { counter-reset: step; padding: 0; margin: 0; list-style: none; }
+    .steps > li {
+      counter-increment: step;
+      padding: 16px 16px 16px 60px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      position: relative;
+      font-size: 15px;
+    }
+    .steps > li::before {
+      content: counter(step);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--gold), #ff7a1a);
+      box-shadow: 0 0 14px var(--gold-glow);
+      color: #1a1206;
+      font-weight: 800;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .steps > li strong { display: block; margin-bottom: 4px; }
+    .steps > li span { color: var(--muted); font-size: 14px; }
+
+    footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    footer .row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 720px) {
+      .hero { min-height: 560px; align-items: flex-start; }
+      .hero .phones img { width: 220px; }
+      .hero .phones .p1 { right: 90px; top: auto; bottom: -120px; }
+      .hero .phones .p2 { right: -60px; top: auto; bottom: -60px; }
+      .hero .scrim {
+        background: linear-gradient(to bottom, rgba(13, 17, 23, 0.96) 40%, rgba(13, 17, 23, 0.55) 75%, rgba(13, 17, 23, 0.2) 100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <div class="brand">
+        <span class="logo">SC</span>
+        <span>Strike-Command: Idle Scrims</span>
+      </div>
+      <div class="links">
+        <a href="rankings.html">Rankings</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="mailto:support@strikecommand.chaoticgamestudios.com">Contact</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="phones" id="hero-phones">
+        <img src="assets/shot-home.png" alt="Strike-Command home screen with league table and live match" class="p1 active" data-slot="1" />
+        <img src="assets/shot-match.png" alt="Live 5v5 match simulation on the Sandspire map" class="p2 active" data-slot="2" />
+        <img src="assets/shot-team.png" alt="Team formation screen with player roles and weapons" class="p1" data-slot="1" style="display:none" />
+        <img src="assets/shot-ranking.png" alt="World ranking leaderboard" class="p2" data-slot="2" style="display:none" />
+      </div>
+      <div class="scrim"></div>
+      <div class="hero-content">
+        <div class="income-ticker">IDLE INCOME <span class="amount" id="income">$6/s</span> &#9889;</div>
+        <h1>Build your squad. Rule the scrims.</h1>
+        <p>An idle esports team-manager. Draft your five, run the tactics board, and watch them frag their way from Silver to Global Elite &mdash; even while you sleep.</p>
+        <!-- Replace these spans with real store badge links once live:
+             https://play.google.com/store/apps/details?id=com.chaoticgamestudios.strikecommand
+             (App Store link once approved) -->
+        <div class="store-badges">
+          <span class="cta soon">Coming soon to Google Play</span>
+          <span class="cta soon">Coming soon to the App Store</span>
+        </div>
+      </div>
+      <div class="dots" id="hero-dots"></div>
+    </div>
+
+    <script>
+      (function () {
+        // Two phone slots cross-fade independently through the shot list.
+        var imgs = document.querySelectorAll("#hero-phones img");
+        var dotsWrap = document.getElementById("hero-dots");
+        var pairs = [[0, 1], [2, 3]]; // [p1 idx, p2 idx] per slide
+        var idx = 0, timer;
+        pairs.forEach(function (_, i) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.setAttribute("aria-label", "Show screenshot set " + (i + 1));
+          if (i === 0) b.className = "active";
+          b.addEventListener("click", function () { go(i); reset(); });
+          dotsWrap.appendChild(b);
+        });
+        var dots = dotsWrap.querySelectorAll("button");
+        function go(n) {
+          dots[idx].classList.remove("active");
+          idx = n % pairs.length;
+          dots[idx].classList.add("active");
+          imgs.forEach(function (img, i) {
+            var on = pairs[idx].indexOf(i) !== -1;
+            img.style.display = "";
+            img.classList.toggle("active", on);
+          });
+        }
+        function reset() { clearInterval(timer); timer = setInterval(function () { go(idx + 1); }, 4500); }
+        reset();
+      })();
+      (function () {
+        // Bling: a slowly climbing idle-income counter.
+        var el = document.getElementById("income");
+        var v = 6;
+        setInterval(function () {
+          v += Math.floor(Math.random() * 3);
+          el.textContent = "$" + v.toLocaleString() + "/s";
+        }, 1200);
+      })();
+    </script>
+
+    <section>
+      <h2>What is Strike-Command: Idle Scrims?</h2>
+      <p class="sub">Your team grinds so you don't have to. Check in, make the calls, collect the winnings.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="icon">&#9889;</div>
+          <h3>Idle income engine</h3>
+          <p>Cash flows in around the clock. Spend it on power upgrades &mdash; Aim, Tactics, Movement, Clutch &mdash; and watch your squad's rating climb.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#127942;</div>
+          <h3>Five leagues to conquer</h3>
+          <p>Fight through 9-match seasons from Silver to Global Elite. Finish top 3 to promote &mdash; or stay and farm trophies, your call.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#127919;</div>
+          <h3>Real tactical sim</h3>
+          <p>MR12 bomb-defusal matches on four original maps, with weapon classes, grenades, rotations, fakes, and per-round strategy rolls.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#128101;</div>
+          <h3>Transfer market</h3>
+          <p>Scout prospects across six rarity tiers, from Common to Godlike. Buy low, sell high, build a dynasty.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#127760;</div>
+          <h3>Living world ranking</h3>
+          <p>120,000+ simulated teams grow every day. Climb from #100,000 to #1 &mdash; and defend it when the world comes for you.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#128081;</div>
+          <h3>Season &amp; power passes</h3>
+          <p>Daily rewards, season pass tracks, career skills, and cups. Free to play, with optional packs and a No Ads unlock.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <p class="sub">From fresh save to your first trophy in minutes.</p>
+      <ol class="steps">
+        <li>
+          <strong>Name your club and meet your five</strong>
+          <span>A starting roster of scrubs with hearts of gold. Every legend starts somewhere.</span>
+        </li>
+        <li>
+          <strong>Set tactics and let the sim run</strong>
+          <span>Aggro, balanced, or defense &mdash; then watch rounds play out live, or close the app and collect later.</span>
+        </li>
+        <li>
+          <strong>Reinvest, scout, promote</strong>
+          <span>Upgrade power, sign better fraggers, and climb leagues until Global Elite &mdash; and the world top 20 &mdash; comes into view.</span>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Free to play, fair to play</h2>
+      <p class="sub">No energy walls. No pay-to-win shortcuts you can't earn in-game.</p>
+      <div class="card">
+        <p style="font-size: 15px; color: var(--text);">
+          Strike-Command: Idle Scrims is free with optional rewarded ads and in-app purchases.
+          Every upgrade, player, and trophy can be earned by playing. Want zero interruptions?
+          A one-time <strong>No Ads</strong> unlock removes them for good.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div>&copy; 2026 Chaotic Game Studios LLC. All rights reserved.</div>
+      <div class="row">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="https://chaoticgamestudios.com">Chaotic Game Studios</a>
+        <a href="mailto:support@strikecommand.chaoticgamestudios.com">Contact</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AstroForge: Idle Miner — Mine the void. Forge an empire.</title>
+  <meta name="description" content="AstroForge: Idle Miner is a space-mining idle game by Chaotic Game Studios. Tap the asteroid, build 8 extractor tiers, launch expeditions, dive the void, and out-earn 10,000 rival pilots." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://astroforge.chaoticgamestudios.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="AstroForge: Idle Miner" />
+  <meta property="og:title" content="AstroForge: Idle Miner — Mine the void. Forge an empire." />
+  <meta property="og:description" content="A space-mining idle game. Tap the asteroid, automate 8 extractor tiers, prestige through expeditions and Void Dives, and climb a 10,000-pilot ladder." />
+  <meta property="og:url" content="https://astroforge.chaoticgamestudios.com/" />
+  <meta property="og:image" content="https://astroforge.chaoticgamestudios.com/assets/screens/mine.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --bg: #070a18;
+      --surface: #0d1024;
+      --surface-2: #141838;
+      --border: #232a52;
+      --text: #eef0fb;
+      --muted: #8f96bd;
+      --purple: #7C4DFF;
+      --purple-glow: rgba(124, 77, 255, 0.45);
+      --amber: #ffb300;
+      --amber-glow: rgba(255, 179, 0, 0.45);
+      --brand: #7C4DFF;
+      --brand-hover: #9a79ff;
+      --radius: 14px;
+      --max-width: 980px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      background:
+        radial-gradient(900px 500px at 85% -5%, rgba(124, 77, 255, 0.14), transparent 60%),
+        radial-gradient(900px 500px at 10% 0%, rgba(255, 179, 0, 0.08), transparent 60%),
+        var(--bg);
+    }
+    a { color: var(--amber); text-decoration: none; font-weight: 600; }
+    a:hover { color: #ffcf5c; text-decoration: underline; }
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+    .brand .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 18px var(--purple-glow);
+      flex-shrink: 0;
+    }
+    .brand .logo img { width: 100%; height: 100%; display: block; }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    nav .links { display: flex; gap: 20px; font-size: 14px; }
+    nav .links a { color: var(--muted); font-weight: 600; }
+    nav .links a:hover { color: var(--amber); text-decoration: none; }
+
+    .hero {
+      margin-top: 32px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border);
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      background:
+        radial-gradient(2px 2px at 12% 22%, #fff 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 28% 8%, #ffd54f 50%, transparent 51%),
+        radial-gradient(2px 2px at 45% 30%, rgba(255,255,255,0.8) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 63% 12%, #fff 50%, transparent 51%),
+        radial-gradient(2px 2px at 78% 26%, rgba(255,213,79,0.9) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 90% 10%, #fff 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 8% 60%, rgba(255,255,255,0.7) 50%, transparent 51%),
+        radial-gradient(2px 2px at 55% 70%, rgba(255,255,255,0.6) 50%, transparent 51%),
+        linear-gradient(160deg, #141838 0%, #0a0d20 70%);
+    }
+    /* Pure-CSS asteroid with orbiting drone, game-icon style */
+    .asteroid {
+      position: absolute;
+      right: 90px;
+      top: 50%;
+      width: 260px;
+      height: 260px;
+      margin-top: -130px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 34% 30%, #4a3585 0%, #3d2a6e 45%, #2a1d4e 100%);
+      border: 5px solid var(--purple);
+      box-shadow:
+        0 0 60px var(--purple-glow),
+        inset -18px -22px 44px rgba(0, 0, 0, 0.55),
+        inset 10px 12px 30px rgba(255, 213, 79, 0.08);
+      animation: bob 7s ease-in-out infinite;
+    }
+    .asteroid::before {
+      /* craters */
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 26%, #241842 0 9%, transparent 10%),
+        radial-gradient(circle at 62% 58%, #241842 0 7%, transparent 8%),
+        radial-gradient(circle at 48% 20%, #241842 0 5%, transparent 6%),
+        radial-gradient(circle at 70% 34%, #241842 0 4%, transparent 5%);
+    }
+    .asteroid::after {
+      /* amber mining-laser glint */
+      content: "";
+      position: absolute;
+      left: 18%;
+      top: 12%;
+      width: 34%;
+      height: 22%;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(255, 179, 0, 0.35), transparent 70%);
+      filter: blur(2px);
+    }
+    .drone {
+      position: absolute;
+      right: 90px;
+      top: 50%;
+      width: 340px;
+      height: 340px;
+      margin-top: -170px;
+      margin-right: -40px;
+      animation: orbit 12s linear infinite;
+      pointer-events: none;
+    }
+    .drone span {
+      position: absolute;
+      left: 50%;
+      top: -8px;
+      width: 16px;
+      height: 16px;
+      margin-left: -8px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, var(--amber), #ff8f00);
+      box-shadow: 0 0 14px var(--amber-glow);
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-14px) rotate(3deg); }
+    }
+    @keyframes orbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .asteroid, .drone, h1 { animation: none; }
+    }
+    .hero .scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(7, 10, 24, 0.96) 25%, rgba(7, 10, 24, 0.55) 60%, rgba(7, 10, 24, 0.15) 100%);
+    }
+    .hero .hero-content {
+      position: relative;
+      padding: 48px 40px;
+      max-width: 560px;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 50px);
+      line-height: 1.08;
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+      background: linear-gradient(100deg, #fff 20%, var(--amber) 55%, var(--purple) 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shine 6s ease-in-out infinite;
+      background-size: 200% 100%;
+    }
+    @keyframes shine {
+      0%, 100% { background-position: 0% 0; }
+      50% { background-position: 100% 0; }
+    }
+    .hero p {
+      color: #c6cbe4;
+      font-size: 17px;
+      margin: 0 0 22px;
+      max-width: 460px;
+    }
+    .income-ticker {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 14px;
+      font-weight: 800;
+      color: var(--amber);
+      text-shadow: 0 0 18px var(--amber-glow);
+      font-size: 15px;
+      letter-spacing: 0.04em;
+    }
+    .income-ticker .amount { font-size: 22px; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--purple), #5228e0);
+      box-shadow: 0 6px 24px var(--purple-glow);
+      color: #f3eeff !important;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+    }
+    .cta:hover { filter: brightness(1.1); text-decoration: none; }
+    .cta.soon {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      box-shadow: none;
+      color: var(--muted) !important;
+      cursor: default;
+    }
+    .cta.soon:hover { filter: none; }
+    .store-badges { display: flex; gap: 12px; flex-wrap: wrap; }
+    .store-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    section { margin-top: 56px; }
+    section > h2 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: -0.01em;
+    }
+    section > .sub { color: var(--muted); font-size: 15px; margin: 0 0 20px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(124, 77, 255, 0.55);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 24px rgba(124, 77, 255, 0.1);
+    }
+    .card .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(124, 77, 255, 0.14);
+      border: 1px solid rgba(124, 77, 255, 0.4);
+      box-shadow: inset 0 0 14px rgba(124, 77, 255, 0.14);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+    .card h3 { font-size: 16px; margin: 0 0 6px; }
+    .card p { color: var(--muted); font-size: 14px; margin: 0; }
+
+    .shots {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding: 8px 4px 20px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .shots::-webkit-scrollbar { height: 8px; }
+    .shots::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 4px; }
+    .phone {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      width: 290px;
+      border-radius: 30px;
+      border: 3px solid #2c3468;
+      background: #05060f;
+      padding: 8px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 32px rgba(124, 77, 255, 0.1);
+      transition: transform 0.18s ease, border-color 0.18s ease;
+    }
+    .phone:hover { transform: translateY(-4px); border-color: var(--purple); }
+    .phone img {
+      display: block;
+      width: 100%;
+      border-radius: 22px;
+    }
+    .phone .cap {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px 0 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .faq details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+    }
+    .faq summary {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 15px;
+      list-style: none;
+      position: relative;
+      padding-right: 24px;
+    }
+    .faq summary::after {
+      content: "+";
+      position: absolute;
+      right: 0;
+      top: -2px;
+      color: var(--amber);
+      font-size: 20px;
+      font-weight: 800;
+    }
+    .faq details[open] summary::after { content: "–"; }
+    .faq details p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
+
+    footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    footer .row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 720px) {
+      .hero { min-height: 560px; align-items: flex-start; }
+      .asteroid { width: 170px; height: 170px; right: 40px; top: auto; bottom: -30px; margin-top: 0; opacity: 0.85; }
+      .drone { display: none; }
+      .hero .scrim {
+        background: linear-gradient(to bottom, rgba(7, 10, 24, 0.96) 40%, rgba(7, 10, 24, 0.6) 75%, rgba(7, 10, 24, 0.25) 100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <div class="brand">
+        <span class="logo"><img src="assets/icon.svg" alt="AstroForge: Idle Miner icon" /></span>
+        <span>AstroForge: Idle Miner</span>
+      </div>
+      <div class="links">
+        <a href="changelog.html">Changelog</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="mailto:support@astroforge.chaoticgamestudios.com">Contact</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="asteroid" aria-hidden="true"></div>
+      <div class="drone" aria-hidden="true"><span></span></div>
+      <div class="scrim"></div>
+      <div class="hero-content">
+        <div class="income-ticker">IDLE INCOME <span class="amount" id="income">⬡ 1,240/s</span> &#9889;</div>
+        <h1>Mine the void. Forge an empire.</h1>
+        <p>A space-mining idle game. Crack the asteroid with your pick, automate a fleet of extractors, launch expeditions for Star Cores &mdash; and keep earning while you sleep.</p>
+        <div class="store-badges">
+          <span class="cta soon">Coming soon to Google Play</span>
+          <span class="cta soon">Coming soon to the App Store</span>
+        </div>
+        <div class="store-note">Free to play &middot; optional ads &amp; in-app purchases</div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        // Bling: a slowly climbing idle-income counter.
+        var el = document.getElementById("income");
+        var v = 1240;
+        setInterval(function () {
+          v += Math.floor(Math.random() * 37);
+          el.textContent = "⬡ " + v.toLocaleString() + "/s";
+        }, 1200);
+      })();
+    </script>
+
+    <section>
+      <h2>What is AstroForge: Idle Miner?</h2>
+      <p class="sub">Your rig grinds so you don't have to. Check in, spend the haul, chase the next prestige.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="icon">&#9935;</div>
+          <h3>Tap-to-mine asteroid</h3>
+          <p>Every tap cracks ore out of a living asteroid &mdash; it glows brighter, spawns orbiting drones, and fires mining lasers as your operation grows.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#128760;</div>
+          <h3>8 extractor tiers</h3>
+          <p>From the humble Mining Drone to the Event Horizon Drill. Milestone doublers, per-tier managers, and a global income upgrade line keep the numbers climbing.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#128640;</div>
+          <h3>Expeditions (prestige)</h3>
+          <p>Reset your run for Star Cores &mdash; each worth +3% income forever &mdash; and spend them in a 4-perk core shop. Every expedition comes back with a full run recap.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#127756;</div>
+          <h3>Void Dives (prestige&nbsp;²)</h3>
+          <p>Hold 250 Star Cores to dive the void: everything resets again for Void Shards worth +25% income each. Your artifact collection survives the void.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#127990;</div>
+          <h3>30 artifacts &amp; loadouts</h3>
+          <p>Discover artifacts across common, rare, and epic rarities &mdash; duplicates level them up. 8 active slots and 3 saveable loadout presets for comet, income, and offline builds.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#127942;</div>
+          <h3>10,000-pilot ladder</h3>
+          <p>Climb Galactic Ranks against 10,000 simulated rival pilots with real callsigns. Percentile readout, next-target chase bar, and overtake toasts as you pass them.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#9876;</div>
+          <h3>Rival duels &amp; raids</h3>
+          <p>Rivals above you issue 24-hour out-earn duels for crystal prizes &mdash; and they raid while you're away. Hold your rank for 1h+ of absence and collect defense crystals instead.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#9732;</div>
+          <h3>Comet events</h3>
+          <p>Golden-cookie style comets drift by every few minutes: standard, crystal, and core comets. Chain consecutive catches to multiply rewards up to &times;3.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#128197;</div>
+          <h3>Daily &amp; weekly missions</h3>
+          <p>Rotating daily missions with crystal rewards, a weekly track that pays out for 12 claims, 7-day login rewards, and 40+ achievements to chase.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#128564;</div>
+          <h3>Offline earnings</h3>
+          <p>Your extractors keep drilling for up to 8 hours while you're gone. Come back to a welcome-back report: haul collected, missions done, rivals that passed you.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#128266;</div>
+          <h3>Sound &amp; haptics</h3>
+          <p>Procedural WebAudio blips for taps, crits, buys, comets, and discoveries &mdash; no audio files &mdash; plus vibration feedback. Toggles in Settings.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Screenshots</h2>
+      <p class="sub">Straight from the Android build.</p>
+      <div class="shots">
+        <figure class="phone" style="margin:0">
+          <img src="assets/screens/mine.png" alt="Mine screen — tap-to-mine asteroid with income readout and extractor tiers" width="390" height="844" loading="lazy" />
+          <figcaption class="cap">Mine</figcaption>
+        </figure>
+        <figure class="phone" style="margin:0">
+          <img src="assets/screens/ranks.png" alt="Galactic Ranks — 10,000-pilot ladder with next-target chase bar" width="390" height="844" loading="lazy" />
+          <figcaption class="cap">Galactic Ranks</figcaption>
+        </figure>
+        <figure class="phone" style="margin:0">
+          <img src="assets/screens/expedition.png" alt="Expedition screen — prestige for Star Cores and the core shop" width="390" height="844" loading="lazy" />
+          <figcaption class="cap">Expeditions</figcaption>
+        </figure>
+        <figure class="phone" style="margin:0">
+          <img src="assets/screens/rewards.png" alt="Rewards screen — daily rewards, missions, and the weekly track" width="390" height="844" loading="lazy" />
+          <figcaption class="cap">Rewards</figcaption>
+        </figure>
+        <figure class="phone" style="margin:0">
+          <img src="assets/screens/shop.png" alt="Shop screen — crystal bundles, boosts, and the Remove Ads unlock" width="390" height="844" loading="lazy" />
+          <figcaption class="cap">Shop</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="faq">
+      <h2>FAQ</h2>
+      <p class="sub">Quick answers, no asteroid dust.</p>
+      <details>
+        <summary>Is AstroForge: Idle Miner free?</summary>
+        <p>Yes. Free with optional rewarded ads and in-app purchases. Everything in the game can be earned by playing, and a one-time <strong>Remove Ads</strong> unlock removes all ads permanently.</p>
+      </details>
+      <details>
+        <summary>When is it out?</summary>
+        <p>Coming soon to Google Play, with an App Store release after. This page will get real store badges the day it launches.</p>
+      </details>
+      <details>
+        <summary>Does it need an internet connection?</summary>
+        <p>No. The whole game runs on your device and offline earnings keep accruing while you're away. Connection is only needed for ads and purchases.</p>
+      </details>
+      <details>
+        <summary>Where is my save stored?</summary>
+        <p>Locally on your device only &mdash; there are no accounts and no game servers. Settings includes a base64 export/import so you can back up or move your save manually. See the <a href="privacy.html">privacy policy</a>.</p>
+      </details>
+      <details>
+        <summary>Are the rival pilots real people?</summary>
+        <p>The 10,000-pilot Galactic Ranks ladder is simulated locally on your device &mdash; rivals grow over real time, duel you, and raid while you're away, but no data ever leaves your phone.</p>
+      </details>
+    </section>
+
+    <footer>
+      <div>&copy; 2026 Chaotic Game Studios. All rights reserved.</div>
+      <div class="row">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="https://chaoticgamestudios.com">Chaotic Game Studios</a>
+        <a href="mailto:support@astroforge.chaoticgamestudios.com">Contact</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

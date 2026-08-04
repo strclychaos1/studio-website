@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://strikecommand.chaoticgamestudios.com/sitemap.xml
