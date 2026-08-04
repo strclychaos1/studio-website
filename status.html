@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Status — Chaotic Game Studios</title>
+  <meta name="description" content="Live status of Chaotic Game Studios services: websites, game APIs, and backend jobs." />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --surface: #14141b;
+      --surface-2: #1b1b26;
+      --border: #232330;
+      --text: #f4f4f8;
+      --muted: #9aa0aa;
+      --brand: #ff4d3d;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --red: #f87171;
+      --radius: 14px;
+      --max-width: 960px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brand); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: var(--max-width); margin: 0 auto; padding: 40px 24px 80px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 20px; }
+    .brand .logo {
+      width: 40px; height: 40px; border-radius: 10px; background: var(--brand);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 900; font-size: 22px;
+    }
+    nav { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    nav .links { display: flex; gap: 18px; font-size: 14px; }
+    h1 { margin: 36px 0 8px; font-size: 28px; }
+    .sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+    .banner {
+      border-radius: var(--radius); padding: 16px 20px; font-weight: 700;
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+      border: 1px solid var(--border); background: var(--surface);
+    }
+    .banner.ok { border-color: rgba(52, 211, 153, 0.4); }
+    .banner.degraded { border-color: rgba(251, 191, 36, 0.5); }
+    .banner.down { border-color: rgba(248, 113, 113, 0.5); }
+    .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+    .dot.green { background: var(--green); box-shadow: 0 0 8px rgba(52, 211, 153, 0.8); }
+    .dot.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(251, 191, 36, 0.8); }
+    .dot.red { background: var(--red); box-shadow: 0 0 8px rgba(248, 113, 113, 0.8); }
+    .dot.grey { background: var(--muted); }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 14px 18px; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .card .name { font-weight: 700; }
+    .card .detail { color: var(--muted); font-size: 13px; }
+    .card .right { margin-left: auto; text-align: right; flex: none; }
+    .card .latency { font-size: 13px; font-weight: 700; }
+    .card .hist { display: flex; gap: 2px; margin-top: 4px; justify-content: flex-end; }
+    .card .hist span { width: 8px; height: 12px; border-radius: 2px; display: inline-block; }
+    .card .hist .g { background: var(--green); }
+    .card .hist .r { background: var(--red); }
+    .card .hist .u { background: var(--border); }
+    .foot { margin-top: 28px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    button.refresh {
+      background: var(--brand); color: #fff; border: 0; border-radius: 10px;
+      font: inherit; font-weight: 700; padding: 8px 16px; cursor: pointer;
+    }
+    button.refresh:hover { background: var(--brand-hover, #ff6a5c); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <div class="brand"><span class="logo">C</span> Chaotic Game Studios</div>
+      <div class="links">
+        <a href="/">Home</a>
+        <a href="/status.html">Status</a>
+      </div>
+    </nav>
+
+    <h1>Service status</h1>
+    <div class="sub">Live checks run in your browser every 60 seconds. Times are latency from your device.</div>
+
+    <div class="banner" id="banner"><span class="dot grey"></span><span id="banner-text">Checking…</span></div>
+
+    <div id="cards"></div>
+
+    <div class="foot">
+      <span id="lastcheck">Last checked: never</span>
+      <button class="refresh" onclick="runChecks()">Refresh now</button>
+    </div>
+  </div>
+
+  <script>
+    // Each service: name, a checker returning { ok, detail } (ok: true=green,
+    // false=red), and optional latency note. Checks are browser-side, so a red
+    // can also mean "unreachable from your network" — the overall banner says so.
+    var SERVICES = [
+      {
+        name: 'Studio website',
+        host: 'chaoticgamestudios.com',
+        check: function () { return ping('/', 'Site reachable'); },
+      },
+      {
+        name: 'SC: Website',
+        host: 'strikecommand.chaoticgamestudios.com',
+        check: function () { return ping('https://strikecommand.chaoticgamestudios.com/', 'Site reachable'); },
+      },
+      {
+        name: 'SC: API',
+        host: 'sc-api.chaoticgamestudios.com',
+        check: function () {
+          return json('https://sc-api.chaoticgamestudios.com/health').then(function (d) {
+            return { ok: !!(d && d.ok), ms: d.__ms, detail: 'Health endpoint' };
+          });
+        },
+      },
+      {
+        name: 'SC: Rankings database',
+        host: 'sc-api.chaoticgamestudios.com',
+        check: function () {
+          return json('https://sc-api.chaoticgamestudios.com/v1/leaderboard?top=1').then(function (d) {
+            var n = d && d.entries ? d.entries.length
+              : d && d.teams ? d.teams.length
+              : d && d.top ? d.top.length : 0;
+            return { ok: !!(d && d.ok !== false), ms: d.__ms, detail: n ? n + ' leader(s) served' : 'Leaderboard query' };
+          });
+        },
+      },
+      {
+        name: 'SC: World simulation',
+        host: 'sc-api.chaoticgamestudios.com',
+        check: function () {
+          return json('https://sc-api.chaoticgamestudios.com/v1/world/summary').then(function (d) {
+            if (!d || d.ok === false) return { ok: false, ms: d ? d.__ms : 0, detail: 'No summary' };
+            var tickMs = typeof d.lastTickAt === 'number' ? d.lastTickAt * 1000 : Date.parse(d.lastTickAt || '');
+            var age = tickMs ? Math.max(0, Math.round((Date.now() - tickMs) / 1000)) : null;
+            var ageText = age === null ? null
+              : age < 120 ? age + 's ago'
+              : age < 7200 ? Math.round(age / 60) + 'm ago'
+              : Math.round(age / 3600) + 'h ago';
+            return { ok: true, ms: d.__ms, detail: ageText ? 'Last world tick ' + ageText : 'World summary served' };
+          });
+        },
+      },
+      {
+        name: 'TT: Website',
+        host: 'tagtalk.chaoticgamestudios.com',
+        check: function () { return ping('https://tagtalk.chaoticgamestudios.com/', 'Site reachable'); },
+      },
+      {
+        name: 'TT: API',
+        host: 'tt-api.chaoticgamestudios.com',
+        check: function () { return ping('https://tt-api.chaoticgamestudios.com/health', 'API reachable'); },
+      },
+    ];
+
+    var TIMEOUT = 8000;
+    var HISTORY_KEY = 'cgs_status_hist';
+    var hist = {};
+    try { hist = JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}'); } catch (e) { hist = {}; }
+
+    function timed(url, opts) {
+      var ctrl = new AbortController();
+      var t = setTimeout(function () { ctrl.abort(); }, TIMEOUT);
+      var started = performance.now();
+      return fetch(url, Object.assign({ signal: ctrl.signal, cache: 'no-store' }, opts || {}))
+        .then(function (res) {
+          clearTimeout(t);
+          return { res: res, ms: Math.round(performance.now() - started) };
+        })
+        .catch(function (err) {
+          clearTimeout(t);
+          return { res: null, ms: Math.round(performance.now() - started), err: err };
+        });
+    }
+
+    // Reachability only (no-cors): any response at all means the server is up.
+    function ping(url, okDetail) {
+      return timed(url, { mode: 'no-cors' }).then(function (r) {
+        if (!r.res) return { ok: false, ms: r.ms, detail: 'Unreachable' };
+        return { ok: true, ms: r.ms, detail: okDetail };
+      });
+    }
+
+    function json(url) {
+      return timed(url).then(function (r) {
+        if (!r.res || !r.res.ok) return { ok: false, ms: r.ms, detail: r.res ? 'HTTP ' + r.res.status : 'Unreachable' };
+        return r.res.json().then(function (d) { d.__ms = r.ms; return d; })
+          .catch(function () { return { ok: false, ms: r.ms, detail: 'Bad response' }; });
+      });
+    }
+
+    function render(results) {
+      var cards = document.getElementById('cards');
+      cards.innerHTML = '';
+      var down = 0, slow = 0;
+      results.forEach(function (r, i) {
+        var state = !r.ok ? 'red' : (r.ms > 2500 ? 'yellow' : 'green');
+        if (state === 'red') down++;
+        if (state === 'yellow') slow++;
+        var h = hist[i] || (hist[i] = []);
+        h.push(state === 'red' ? 'r' : 'g');
+        if (h.length > 20) h.shift();
+        var card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML =
+          '<span class="dot ' + state + '"></span>' +
+          '<div><div class="name">' + r.name + '</div>' +
+          '<div class="detail">' + r.host + ' · ' + (r.detail || '') + '</div></div>' +
+          '<div class="right"><div class="latency">' + (r.ok ? r.ms + ' ms' : 'down') + '</div>' +
+          '<div class="hist">' + h.map(function (x) { return '<span class="' + x + '"></span>'; }).join('') + '</div></div>';
+        cards.appendChild(card);
+      });
+      try { localStorage.setItem(HISTORY_KEY, JSON.stringify(hist)); } catch (e) { /* ignore */ }
+      var banner = document.getElementById('banner');
+      var text = document.getElementById('banner-text');
+      banner.className = 'banner ' + (down ? 'down' : (slow ? 'degraded' : 'ok'));
+      banner.querySelector('.dot').className = 'dot ' + (down ? 'red' : (slow ? 'yellow' : 'green'));
+      text.textContent = down
+        ? down + ' of ' + results.length + ' services unreachable — if only some are red, the rest of the internet can likely reach them (check your connection)'
+        : (slow ? 'All services up, some responding slowly' : 'All systems operational');
+      document.getElementById('lastcheck').textContent = 'Last checked: ' + new Date().toLocaleTimeString();
+    }
+
+    function runChecks() {
+      document.getElementById('banner-text').textContent = 'Checking…';
+      Promise.all(SERVICES.map(function (s) {
+        return s.check().then(function (r) {
+          return { name: s.name, host: s.host, ok: !!r.ok, ms: r.ms || 0, detail: r.detail };
+        }).catch(function () {
+          return { name: s.name, host: s.host, ok: false, ms: 0, detail: 'Check failed' };
+        });
+      })).then(render);
+    }
+
+    runChecks();
+    setInterval(runChecks, 60000);
+  </script>
+</body>
+</html>

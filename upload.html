@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Upload — Chaotic Game Studios</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root {
+      --bg: #0b0b0f; --surface: #14141b; --surface-2: #1b1b26; --border: #232330;
+      --text: #f4f4f8; --muted: #9aa0aa; --brand: #ff4d3d; --green: #34d399;
+      --red: #f87171; --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 480px; margin: 0 auto; padding: 60px 24px; }
+    h1 { font-size: 24px; margin-bottom: 6px; }
+    .sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+    label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--muted); margin: 14px 0 6px; }
+    input[type="password"], input[type="file"] {
+      width: 100%; background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); padding: 10px 12px; font: inherit;
+    }
+    input[type="file"] { padding: 8px; }
+    button {
+      width: 100%; margin-top: 20px; background: var(--brand); color: #fff; border: 0;
+      border-radius: 10px; font: inherit; font-weight: 800; padding: 12px; cursor: pointer;
+    }
+    button:disabled { opacity: 0.5; cursor: default; }
+    #result { margin-top: 16px; font-size: 14px; min-height: 22px; word-break: break-all; }
+    #result.ok { color: var(--green); }
+    #result.err { color: var(--red); }
+    .note { margin-top: 18px; color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Admin file upload</h1>
+    <div class="sub">Files land on the VPS in a non-public drop folder. Approved accounts only.</div>
+    <div class="card">
+      <label for="token">ACCESS TOKEN</label>
+      <input type="password" id="token" placeholder="Admin token" autocomplete="off" />
+      <label for="file">FILE</label>
+      <input type="file" id="file" />
+      <button id="go" onclick="upload()">UPLOAD</button>
+      <div id="result"></div>
+    </div>
+    <div class="note">The token is checked on the server — nothing here grants access by itself.</div>
+  </div>
+
+  <script>
+    var API = 'https://sc-api.chaoticgamestudios.com/admin/upload';
+    function upload() {
+      var token = document.getElementById('token').value.trim();
+      var f = document.getElementById('file').files[0];
+      var out = document.getElementById('result');
+      var btn = document.getElementById('go');
+      out.className = ''; out.textContent = '';
+      if (!token || !f) { out.className = 'err'; out.textContent = 'Token and file are both required.'; return; }
+      btn.disabled = true;
+      out.textContent = 'Uploading ' + f.name + ' (' + Math.round(f.size / 1024) + ' KB)…';
+      fetch(API, {
+        method: 'POST',
+        headers: { 'X-Admin-Token': token, 'X-Filename': f.name },
+        body: f,
+      }).then(function (r) {
+        return r.json().then(function (d) { return { status: r.status, d: d }; });
+      }).then(function (res) {
+        btn.disabled = false;
+        if (res.status === 200 && res.d.ok) {
+          out.className = 'ok';
+          out.textContent = '✅ Saved on the server (' + res.d.bytes + ' bytes). Tell the assistant it is there.';
+        } else {
+          out.className = 'err';
+          out.textContent = 'Upload failed (' + (res.d.detail || res.status) + ').';
+        }
+      }).catch(function () {
+        btn.disabled = false;
+        out.className = 'err';
+        out.textContent = 'Network error — check your connection and try again.';
+      });
+    }
+  </script>
+</body>
+</html>
