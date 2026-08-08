@@ -1,0 +1,3 @@
+# app-ads.txt — Chaotic Game Studios LLC
+# AdMob publisher authorization (Strike-Command: Idle Esports, TagTalk)
+google.com, pub-1623471429719486, DIRECT, f08c47fec0942fa0
