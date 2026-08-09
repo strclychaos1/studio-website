@@ -1,0 +1,68 @@
+:root {
+  --ink: #1a2332;
+  --muted: #5a6b82;
+  --accent: #b3541e;
+  --card: #ffffff;
+  --bg: #f4f2ee;
+  --line: #e3ded6;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.65;
+}
+nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 28px;
+  background: var(--ink);
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+nav .brand { font-weight: 700; letter-spacing: 0.02em; }
+nav .links a {
+  color: #cfd8e3; text-decoration: none; margin-left: 20px; font-size: 15px;
+}
+nav .links a.active, nav .links a:hover { color: #fff; border-bottom: 2px solid var(--accent); }
+.hero {
+  background: var(--ink);
+  color: #fff;
+  padding: 48px 28px 56px;
+  text-align: center;
+}
+.hero h1 { margin: 0 0 10px; font-size: 40px; }
+.hero .tagline {
+  color: #cfd8e3; font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 15px; max-width: 720px; margin: 0 auto 18px;
+}
+.hero .brandline { font-style: italic; font-size: 19px; color: #e8ded2; max-width: 640px; margin: 0 auto; }
+main { max-width: 860px; margin: 0 auto; padding: 32px 20px 64px; }
+.pagetitle { font-size: 30px; margin: 12px 0 24px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 26px 30px;
+  margin-bottom: 22px;
+  box-shadow: 0 1px 3px rgba(26, 35, 50, 0.06);
+}
+.card h2 { margin: 0 0 10px; font-size: 22px; }
+.card .where {
+  font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;
+  color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em;
+  margin: -4px 0 14px;
+}
+.card ul { padding-left: 22px; margin: 0; }
+.card li { margin-bottom: 7px; }
+.card a { color: var(--accent); }
+.honor { font-style: italic; color: var(--muted); }
+.projlink { font-family: 'Segoe UI', Arial, sans-serif; font-weight: 600; }
+footer {
+  text-align: center; padding: 28px;
+  color: var(--muted); font-size: 14px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  border-top: 1px solid var(--line);
+}
+footer a { color: var(--accent); text-decoration: none; }
